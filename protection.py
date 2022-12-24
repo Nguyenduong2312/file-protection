@@ -30,3 +30,31 @@ def passMode(password):
             if password == '0':
                 return
 
+# ----
+def checkNumber(char):
+    if ord(char) > 47 and ord(char) < 58:
+        return True
+    return False
+
+def pass1(password):
+    realPass = ''
+    count = 0
+    for i in range (0, len(password)):
+        if checkNumber(password[i]):
+            count += 1
+            if i == len(password) - 1:
+                realPass += str(count)
+        elif count != 0:
+            realPass += str(count)
+            count = 0
+    return realPass
+
+# ---- 
+def pass2(password):
+    n = int(password[0])
+    realPass = ''
+    while len(password) > n+1:
+        password = password[n + 1:]
+        realPass += password[0]
+    return realPass
+
