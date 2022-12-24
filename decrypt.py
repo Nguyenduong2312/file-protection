@@ -1,14 +1,8 @@
 import os
-#from decrypt import*
 from encrypt import*
+from protection import *
 from cryptography.fernet import Fernet
-import base64
-import hashlib
-import numpy as np
-import string, random, time
 import os
-import shutil
-import csv
 
 def decrypt_data(data,password):
     size = int(data[-1:].decode())
@@ -36,21 +30,6 @@ def readData(fileName):
                     allData += data
     return allData    
 
-#Hàm lấy mật khẩu động
-def getPassDong():
-    t = time.localtime()
-    return time.strftime("%H", t) + time.strftime("%M", t)
-
-#hàm kiểm tra mật khẩu động
-## password  = 3 ký từ đầu ngẫu nhiên + giờ(24h)(2 ký tự) + 1 dãy ký tự ngẫu nhiên + phút(2 ký tự) + 3 ký tự ngẫu nhiên
-def checkPassDong(password): 
-    password = password[:-3]
-    realPassword = password[3:5] + password[-2:]
-    print(realPassword , getPassDong())
-    if realPassword == getPassDong(): 
-        return True
-    return False
-
 #Hàm kiểm tra mật khẩu của 1 file đã mã hóa
 def checkPassword(fileName, password):
     f = open('encr/' + fileName)
@@ -59,21 +38,6 @@ def checkPassword(fileName, password):
     if data.encode() == gen_fernet_key(password.encode('utf-8')):
         return True
     return False
-#----
-def checkMode(a,b,c,n):
-    return (a+b)%n == c
-
-def passMode(password):
-    while len(password) % 3 != 1:
-        password = input('Mật khẩu không hợp lệ. Nhấn 0 để thoát hoặc nhập lại mật khẩu: ')
-        if password == '0':
-            return
-    n = int(password[0])
-    for i in range(1, len(password), 3):
-        while checkMode(int(password[i]),int(password[i+1]),int(password[i+2]),n) == False:
-            password = input('Mật khẩu không hợp lệ. Nhấn 0 để thoát hoặc nhập lại mật khẩu: ')
-            if password == '0':
-                return
 
 #Hàm xóa tất cả file chứa nội dung mã hóa sau khi file đó được giải mã
 def removeFile(fileName):
