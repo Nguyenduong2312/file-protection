@@ -5,7 +5,6 @@ import hashlib
 import numpy as np
 import string, random, time
 import os
-import csv
 
 def gen_fernet_key(passcode:bytes) -> bytes:
     assert isinstance(passcode, bytes)
@@ -36,7 +35,7 @@ def generateFileName():
     return getFolderName() + '/' + result_str + ".txt"
 
 #Hàm ghi dữ liệu vào nhiều file khác nhau, mỗi file chứa 50 ký tự. Các file được lưu vào folder en_file
-#File ghi 50 ký tự đầu có tên do người dùng nhập vào
+#File ghi 150 ký tự đầu có tên do người dùng nhập vào
 #Các file sau có tên do chương trình random và được lưu vào cuối nội dung file trước đó
 #Cách làm này tương tự như Danh sách liên kết
 def writeData(fileName,data):
@@ -50,14 +49,14 @@ def writeData(fileName,data):
         encrypted_file.write(newFile[:-4])
         newFile =newFile.decode()
         # tạo file mới có tên random
-    data = data[150:] #xóa 50 byte đầu của data
+    data = data[150:] #xóa 150 byte đầu của data
     while (len(data) / 150 > 1):
         with open(newFile, 'ab+') as encrypted_file:
             encrypted_file.write(data[0:150])
             newFile = generateFileName().encode()
             encrypted_file.write(newFile[:-4])
             newFile =newFile.decode()
-        data = data[150:] #xóa 50 byte đầu của data
+        data = data[150:] #xóa 150 byte đầu của data
     with open(newFile, 'ab+') as encrypted_file:
         encrypted_file.write(data)
 
@@ -77,7 +76,7 @@ def encrypt(fileName,enFileName,password):
         writeData(enFileName,encrypted)
         return
 
-#Hàm kiểm tra một file có được mã hóa chưa (được lưu trong file public.csv)
+#Hàm kiểm tra một file có được mã hóa chưa 
 def checkFileExists(direct,fileName):
     try :
         open(direct + fileName)        

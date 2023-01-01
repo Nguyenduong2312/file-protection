@@ -76,11 +76,46 @@ def runDecrypt():
         if OTP == '0':
             return
 
+    data = readData(fileName)
+    de_data = decrypt_data(data,password)
+    deFileName = input('Nhập tên file để lưu nọi dung giải mã:')
+    while checkFileExists('',deFileName):
+        deFileName = input('File đã tồn tại. Nhập 0 để thoát hoặc nhập lại tên file: ')
+        if deFileName == 0: 
+            return
+    dencrypted_file = open(deFileName,'w')  
+    dencrypted_file.write(de_data)
+    dencrypted_file.close()
+    removeFile(fileName)
+    print('Giải mã thành công.')
+
+
+def runDecrypt1():
+    fileName = input('Nhập tên file cần giải mã:')
+    while checkFileExists('encr/',fileName) == False:
+        fileName = input('File không tồn tại hoặc chưa được mã hóa. Nhập 0 để thoát hoặc nhập lại tên file: ')
+        if fileName == 0: 
+            return
+
+    password = input('Nhập mật khẩu 1 để mã hóa:')
+    realPass = pass1(password)
+    while realPass == getPassDong():
+        password = input('Mật khẩu sai. Nhấn 0 để thoát hoặc nhập lại: ')
+        if password == '0':
+            return
+
+    password = input('Nhập mật khẩu 2 để mã hóa:')
+    realPass = pass2(password)
+    while checkPassword(fileName,realPass) == False:
+        password = input('Mật khẩu sai. Nhấn 0 để thoát hoặc nhập lại: ')
+        if password == '0':
+            return
+
     passmode = input('Nhập mật khẩu số để tiếp tục:')
     passMode(passmode)
 
     data = readData(fileName)
-    de_data = decrypt_data(data,password)
+    de_data = decrypt_data(data,realPass)
     deFileName = input('Nhập tên file để lưu nọi dung giải mã:')
     while checkFileExists('',deFileName):
         deFileName = input('File đã tồn tại. Nhập 0 để thoát hoặc nhập lại tên file: ')

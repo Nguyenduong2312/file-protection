@@ -9,20 +9,20 @@ def getPassDong():
 def checkPassDong(password): 
     password = password[:-3]
     realPassword = password[3:5] + password[-2:]
-    print(realPassword , getPassDong())
     if realPassword == getPassDong(): 
         return True
     return False
 
-#----
+#Hàm kiểm tra tổng 2 a,b mode cho n có bằng c hả không
 def checkMode(a,b,c,n):
     return (a+b)%n == c
 
+#Hàm kiểm tra mật khẩu 
 def passMode(password):
-    while len(password) % 3 != 1:
+    while len(password) != 7 or password[1:3] + password[4:6] != getPassDong():
         password = input('Mật khẩu không hợp lệ. Nhấn 0 để thoát hoặc nhập lại mật khẩu: ')
         if password == '0':
-            return
+            return            
     n = int(password[0])
     for i in range(1, len(password), 3):
         while checkMode(int(password[i]),int(password[i+1]),int(password[i+2]),n) == False:
@@ -30,17 +30,19 @@ def passMode(password):
             if password == '0':
                 return
 
-# ----
+ #Hàm kiểm tra một ký tự có phải là chữ số hay không
 def checkNumber(char):
     if ord(char) > 47 and ord(char) < 58:
         return True
     return False
-
+#Hàm kiểm tra mật khẩu
 def pass1(password):
     realPass = ''
     count = 0
     for i in range (0, len(password)):
-        if checkNumber(password[i]):
+        if password[i] == '0':
+            realPass += '0'
+        elif checkNumber(password[i]):
             count += 1
             if i == len(password) - 1:
                 realPass += str(count)
@@ -49,7 +51,7 @@ def pass1(password):
             count = 0
     return realPass
 
-# ---- 
+#Hàm kiểm tra mật khẩu 
 def pass2(password):
     n = int(password[0])
     realPass = ''
