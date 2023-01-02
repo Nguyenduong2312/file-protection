@@ -12,12 +12,22 @@ def gen_fernet_key(passcode:bytes) -> bytes:
     hlib.update(passcode)
     return base64.urlsafe_b64encode(hlib.hexdigest().encode('latin-1'))
 
+def get_random_string(length):
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
+
 def encrypt_data(data,password):
     key = gen_fernet_key(password.encode('utf-8'))
     fernet = Fernet(key)
     encMessage = fernet.encrypt(data.encode())
-    extraByte = np.random.bytes(np.random.randint(1,10))
-    return encMessage + extraByte + str(len(extraByte)).encode('utf-8')
+    print('data en:',encMessage)
+    extraByte = get_random_string(np.random.randint(1,10)).encode('utf-8')
+    add = encMessage + extraByte + str(len(extraByte)).encode('utf-8')
+    print('eta',extraByte)
+    print('tong',add)
+    return add
 
 #Hàm trả về ngẫu nhiên tên tất 1 folder
 def getFolderName():

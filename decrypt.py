@@ -5,8 +5,10 @@ from cryptography.fernet import Fernet
 import os
 
 def decrypt_data(data,password):
+    print('data chưa cắt:',data)
     size = int(data[-1:].decode())
-    data = data[:-(size + 1)]    
+    data = data[:-(size + 1)]   
+    print('rồi:',data) 
     print(type(data), data)
     key = gen_fernet_key(password.encode('utf-8'))
     fernet = Fernet(key)
