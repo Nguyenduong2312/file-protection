@@ -7,6 +7,7 @@ import os
 def decrypt_data(data,password):
     size = int(data[-1:].decode())
     data = data[:-(size + 1)]    
+    print(type(data), data)
     key = gen_fernet_key(password.encode('utf-8'))
     fernet = Fernet(key)
     decMessage = fernet.decrypt(data).decode()
@@ -99,23 +100,20 @@ def runDecrypt1():
 
     password = input('Nhập mật khẩu 1 để mã hóa:')
     realPass = pass1(password)
-    while realPass == getPassDong():
+    while realPass != getPassDong():
         password = input('Mật khẩu sai. Nhấn 0 để thoát hoặc nhập lại: ')
         if password == '0':
             return
 
     password = input('Nhập mật khẩu 2 để mã hóa:')
-    realPass = pass2(password)
-    while checkPassword(fileName,realPass) == False:
+    while checkPassword(fileName,pass2(password)) == False:
         password = input('Mật khẩu sai. Nhấn 0 để thoát hoặc nhập lại: ')
         if password == '0':
             return
-
     passmode = input('Nhập mật khẩu số để tiếp tục:')
     passMode(passmode)
-
     data = readData(fileName)
-    de_data = decrypt_data(data,realPass)
+    de_data = decrypt_data(data,pass2(password))
     deFileName = input('Nhập tên file để lưu nọi dung giải mã:')
     while checkFileExists('',deFileName):
         deFileName = input('File đã tồn tại. Nhập 0 để thoát hoặc nhập lại tên file: ')

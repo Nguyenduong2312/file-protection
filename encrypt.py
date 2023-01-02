@@ -72,6 +72,7 @@ def encrypt(fileName,enFileName,password):
         data = file.read()
         key = gen_fernet_key(password.encode('utf-8')) 
         encrypted = key + encrypt_data(data,password)
+        print('en:',encrypted)
         #hàm ghi data vào nhiều file
         writeData(enFileName,encrypted)
         return
