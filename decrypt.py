@@ -99,8 +99,7 @@ def runDecrypt1():
             return
 
     password = input('Nhập mật khẩu 1 để mã hóa:')
-    realPass = pass1(password)
-    while realPass != getPassDong():
+    while pass1(password) != getPassDong():
         password = input('Mật khẩu sai. Nhấn 0 để thoát hoặc nhập lại: ')
         if password == '0':
             return
