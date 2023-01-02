@@ -34,7 +34,7 @@ def generateFileName():
     result_str = ''.join(random.choice(letters) for i in range(5))
     return getFolderName() + '/' + result_str + ".txt"
 
-#Hàm ghi dữ liệu vào nhiều file khác nhau, mỗi file chứa 50 ký tự. Các file được lưu vào folder en_file
+#Hàm ghi dữ liệu vào nhiều file khác nhau, mỗi file chứa 150 ký tự. Các file được lưu vào folder encr
 #File ghi 150 ký tự đầu có tên do người dùng nhập vào
 #Các file sau có tên do chương trình random và được lưu vào cuối nội dung file trước đó
 #Cách làm này tương tự như Danh sách liên kết

@@ -42,6 +42,7 @@ def pass1(password):
     for i in range (0, len(password)):
         if password[i] == '0':
             realPass += '0'
+            count = 0
         elif checkNumber(password[i]):
             count += 1
             if i == len(password) - 1:
